@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--
+                                                                             .:://++++++//:-.
+                                                                           .++/::++++++++++++/`
+                                                                           :++   /+++++++++++/:
+                                                                           :++/:/++++++++++////
+  __  __ _                _____       _   _                                .---------+++//////:
+ |  \/  (_)              |  __ \     | | | |                        -:///////////////++///////: ddddhs:
+ | \  / |_  ___ _ __ ___ | |__) |   _| |_| |__   ___  _ __        -++++++++++++++++++/////////: ddddddds`
+ | |\/| | |/ __| '__/ _ \|  ___/ | | | __| '_ \ / _ \| '_ \      .+++++++++++++++++///////////: ddddddddo
+ | |  | | | (__| | | (_) | |   | |_| | |_| | | | (_) | | | |     /+++++++++++++++/////////////`/ddddddddd
+ |_|  |_|_|\___|_|  \___/|_|    \__, |\__|_| |_|\___/|_| |_|     ++++++++++++/::::::::::::--..+dddddddddd
+                                 __/ |                           ++++++++++:`-+syyyyyyyysssyhdddddddddddd
+                                |___/                            /++++++++-.hmmdddddddddddddddddddddddddh
+                                                                 -+++++++/`omddddddddddddddddddddddddddd+
+                                                                  :++++///`sddddddddddddddddddddddddddd+
+                                                                   .://///`sdddddddddhyyyyyyyyyyyyyys/`
+                                                                           sdddddddddo++++++++/
+                                                                           sdddddddddddddhshddy
+                                                                           oddddddddddddd`  hdy
+                                                                           .yddddddddddddyoydd/
+                                                                             ./oyhhdddddhys+:`
+WELL DONE!
+
+You've found the source! :-)
+
+If you want to see how the editor works you should check out the python-main.js file - it has all sorts of
+helpful comments for you so you'll be able to work it all out.
+
+If you're wondering what the long string of random looking characters is at the end of this file, well, it's
+a copy of the MicroPython runtime that we copy onto the micro:bit. When you click download, the code you've
+written in the editor is similarly encoded and then inserted at the end where you see a line of ::::::::::::
+characters.
+
+If you want to know more about Python visit:
+
+http://python.org/
+
+If you want to know more about MicroPython (the version of Python we're using here), then visit:
+
+http://micropython.org/
+
+Finally, remember the Zen of MicroPython:
+
+Code,
+Hack it,
+Less is more,
+Keep it simple,
+Small is beautiful,
+
+Be brave! Break things! Learn and have fun!
+Express yourself with MicroPython.
+
+:-)
+
+Happy hacking,
+
+Nicholas and Damien.
+    -->
+    <head>
+        <meta charset="utf-8">
+        <title>Python editor</title>
+        <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/vex.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/vex-theme-wireframe.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css">
+        <link rel="icon" href="static/img/favicon.ico">
+    </head>
+    <body>
+        <script type="application/javascript">
+        <!-- VERSION INFORMATION -->
+        VERSION = "0.1.0";
+        </script>
+        <script id="load-template" type="x-tmpl-mustache">
+            <h2><i class="fa fa-upload"></i> <strong>{{ title }}</strong></h2>
+            <div class="load-drag-target" id="load-drag-target">
+                <p>{{ instructions }}</p>
+            </div>
+            <div class="load-form">
+                <form id="load-form-form">
+                    <input type="file" name="load-form-file-upload"/><br/>
+                    <input type="submit" value="{{ submit }}"/>
+                </form>
+            </div>
+            <div id="load-alt">
+                <p><a href="#" class="load-form load-toggle">{{ toggle-drop }}</a></p>
+                <p><a href="#" class="load-drag-target load-toggle">{{ toggle-file }}</a></p>
+            </div>
+        </script>
+        <script id="snippet-template" type="x-tmpl-mustache">
+            <h2><i class="fa fa-cogs"></i> <strong>{{ title }}</strong></h2>
+            <p>{{ description }}</p>
+            <p>{{ instructions }}</p>
+
+            <table class="snippet-table">
+                <tr>
+                    <th>trigger</th>
+                    <th>description</th>
+                </tr>
+                {{#snippets}}
+                <tr class="snippet-selection">
+                    <td>{{trigger}}<span class="snippet-name">{{name}}</span></td>
+                    <td>{{#describe}}{{name}}{{/describe}}</td>
+                </tr>
+                {{/snippets}}
+            </table>
+
+        </script>
+        <script id="share-template" type="x-tmpl-mustache">
+            <h2><i class="fa fa-share-alt"></i> <strong>{{ title }}</strong></h2>
+            <div id="make-link">
+                <p>{{ instructions }}</p>
+                <p><label for="passphrase" class="share-label">{{ passphrase }}</label> <input id="passphrase" type="password"/></p>
+                <p><label for="hint" class="share-label">{{ hint }}</label> <input id="hint"/></p>
+                <p><button id="button-create-link">{{ button }}</button></p>
+            </div>
+            <div id="share-link">
+                <p>{{ description }}</p>
+                <textarea id="direct-link" readonly style="width:100%; height:200px;border:0;"></textarea>
+                <p id="shortener" style="display: none;">{{ shortener }} <a href="#" id="short-link"></a></p>
+            </div>
+        </script>
+        <script id="decrypt-template" type="x-tmpl-mustache">
+            <h2><i class="fa fa-unlock-alt"></i> <strong>{{ title }}</strong></h2>
+            <p>{{ instructions }}</p>
+            <p><label for="passphrase" class="share-label">{{ passphrase }}</label> <input id="passphrase" type="password"/></p>
+            <p>{{ hint }}</p>
+            <p><button id="button-decrypt-link">{{ button }}</button></p>
+        </script>
+        <script id="messagebar-template" type="x-tmpl-mustache">
+            <i class="fa fa-warning"></i> <strong>{{ title }}</strong>
+            <a href="#" id="messagebar-link">{{ link }}</a> {{ instructions }}
+            <a href="#" id="messagebar-close">{{ close }}</a>
+        </script>
+        <div id="main" class="vbox">
+          <div id="messagebar" class="hbox"></div>
+          <div id="toolbox" class="hbox">
+            <div id="commands" class="hbox">
+                <a href="#" class="roundbutton" id="command-download"
+                    tabindex="1"
+                    title="Download a hex file to flash onto your micro:bit">
+                    <div class="roundsymbol">
+                                      <svg class="svg svg-icon-touchdevelop" viewBox="50 50 380 380" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-label="touchdevelop,white">
+                                                      <path d="m 185.96612,110.36806 41.029,41.029 0,-72.834699 27.352,0 0.001,72.834699 41.029,-41.029 0,31.911 -54.706,54.706 -54.705,-54.706 0,-31.911 z m 98.203,181.9 c 0,-9.128 7.406,-16.539 16.541,-16.539 9.146,0 16.535,7.411 16.535,16.539 0,9.131 -7.389,16.548 -16.535,16.548 -9.135,0 -16.541,-7.417 -16.541,-16.548 z m -121.494,0.003 c 0,-9.129 7.413,-16.542 16.548,-16.542 9.129,0 16.537,7.413 16.537,16.542 0,9.131 -7.408,16.547 -16.537,16.547 -9.135,0 -16.548,-7.416 -16.548,-16.547 z m 16.544,-81.93 122.554,0.202 c 45.667,0 82.285,36.553 82.285,81.732 0,45.179 -36.757,81.934 -81.937,81.934 l -122.902,0 c -45.177,0 -81.934395,-36.755 -81.934395,-81.934 0,-45.179 36.757395,-81.934 81.934395,-81.934 z m -49.164,81.934 c 0,27.105 22.059,49.164 49.164,49.164 l 122.902,0 c 27.107,0 49.159,-22.059 49.159,-49.164 0,-27.112 -22.052,-49.164 -49.159,-49.164 l -122.902,0 c -27.105,0 -49.164,22.052 -49.164,49.164 z" id="path3341" inkscape:connector-curvature="0" style="fill:currentColor"></path>
+                                                                                    </svg>
+                    </div>
+                    <div class="roundlabel">Download</div>
+                </a>
+                <a href="#" class="roundbutton" id="command-save"
+                    tabindex="2"
+                    title="Save your Python code to your computer">
+                    <div class="roundsymbol">
+                        <i class="fa fa-download"></i>
+                    </div>
+                    <div class="roundlabel">Save</div>
+                </a>
+                <a href="#" class="roundbutton" id="command-load"
+                    tabindex="3"
+                    title="Load Python code or hex file into the editor">
+                    <div class="roundsymbol">
+                        <i class="fa fa-upload"></i>
+                    </div>
+                    <div class="roundlabel">Load</div>
+                </a>
+                <a href="#" class="roundbutton hidden" id="command-blockly"
+                    tabindex="4"
+                    title="Click to create code with blockly">
+                    <div class="roundsymbol">
+                      <svg class="svg svg-icon-touchdevelop" viewBox="-20 0 500 500" xmlns="http://www.w3.org/2000/svg" role="presentation" aria-label="touchdevelop,white">
+                        <path style="fill:currentColor" d="m 387.2,237.3 c -6.6,0 -12.8,1.3 -18.7,3.4 l 0,-97.2 -97.2,0 c 2.1,-5.9 3.4,-12.1 3.4,-18.8 0,-31.1 -25.2,-56.2 -56.2,-56.2 -31,0 -56.2,25.2 -56.2,56.2 0,6.6 1.4,12.9 3.4,18.8 l -97.1,0 0,300 97.2,0 c -2.1,-5.9 -3.4,-12.1 -3.4,-18.8 0,-31.1 25.2,-56.2 56.2,-56.2 31,0 56.2,25.2 56.2,56.2 0,6.6 -1.3,12.9 -3.4,18.8 l 97.2,0 0,-97.2 c 5.9,2.1 12.1,3.4 18.7,3.4 31.1,0 56.2,-25.2 56.2,-56.2 -0.1,-31.1 -25.2,-56.2 -56.3,-56.2 z"/>
+                      </svg>
+                    </div>
+                    <div class="roundlabel">Blockly</div>
+                </a>
+                <a href="#" class="roundbutton hidden" id="command-snippet"
+                    tabindex="5"
+                    title="Click to select a snippet (code shortcut)">
+                    <div class="roundsymbol">
+                        <i class="fa fa-cogs"></i>
+                    </div>
+                    <div class="roundlabel">Snippets</div>
+                </a>
+                <a href="help.html" target="_blank" class="roundbutton"
+                    id="command-help" tabindex="6"
+                    title="Open help for this editor in a new tab">
+                    <div class="roundsymbol">
+                        <i class="fa fa-question"></i>
+                    </div>
+                    <div class="roundlabel">Help</div>
+                </a>
+                <a href="#" class="roundbutton hidden"
+                    id="command-share" tabindex="7"
+                    title="Create a link to share your script">
+                    <div class="roundsymbol">
+                        <i class="fa fa-share-alt"></i>
+                    </div>
+                    <div class="roundlabel">Share</div>
+                </a>
+                <div id="script-icons" class="vbox">
+                    <a class="holder zoomer" tabindex="8" id="zoom-in"
+                        href="#">
+                        <div class="status-icon">
+                            <i class="fa fa-search-plus"
+                                title="Zoom in"></i>
+                        </div>
+                    </a>
+                    <a class="holder zoomer" tabindex="9" id="zoom-out"
+                        href="#">
+                        <div class="status-icon">
+                            <i class="fa fa-search-minus"
+                                title="Zoom out"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="vbox" id="script-box">
+                <div id="script-name" class="flex1" contenteditable
+                    tabindex="10">
+                </div>
+                <div id="script-description" contenteditable
+                    tabindex="11">
+                </div>
+            </div>
+          </div>
+          <div class="hbox flex1">
+            <div id="blockly"></div>
+            <div id="editor" class="flex3" tabindex="-1"></div>
+          </div>
+        </div>
+        <script src="ace/ace.js" type="application/javascript"
+            charset="utf-8"></script>
+        <script src="ace/ext-language_tools.js" type="application/javascript"
+            charset="utf-8"></script>
+        <script src="static/js/jquery-2.1.4.min.js"
+            type="application/javascript"></script>
+        <script src="static/js/forge.min.js" type="application/javascript"></script>
+        <script src="static/js/FileSaver.min.js" type="application/javascript"></script>
+        <script src="static/js/vex.combined.min.js"
+            type="application/javascript"></script>
+        <script src="static/js/encoding.js" type="application/javascript"></script>
+        <script src="static/js/mustache.min.js"
+            type="application/javascript"></script>
+        <script src="blockly/blockly_compressed.js"></script>
+        <script src="blockly/blocks_compressed.js"></script>
+        <script src="blockly/python_compressed.js"></script>
+        <script src="microbit_blocks/blocks/blocky.js"></script>        
+        <script src="microbit_blocks/generators/main_loop.js"></script>
+        <script src="microbit_blocks/generators/buttons.js"></script>
+        <script src="microbit_blocks/generators/buzzer.js"></script>
+        <script src="microbit_blocks/generators/compass.js"></script>
+        <script src="microbit_blocks/generators/display.js"></script>
+        <script src="microbit_blocks/generators/image.js"></script>
+        <script src="microbit_blocks/generators/lcd.js"></script>
+        <script src="microbit_blocks/generators/led.js"></script>
+        <script src="microbit_blocks/generators/light.js"></script>
+        <script src="microbit_blocks/generators/message.js"></script>
+        <script src="microbit_blocks/generators/microbit.js"></script>
+        <script src="microbit_blocks/generators/moisture.js"></script>
+        <script src="microbit_blocks/generators/mosfet.js"></script>
+        <script src="microbit_blocks/generators/motion.js"></script>
+        <script src="microbit_blocks/generators/music.js"></script>
+        <script src="microbit_blocks/generators/neopixel.js"></script>
+        <script src="microbit_blocks/generators/pins.js"></script>
+        <script src="microbit_blocks/generators/radio.js"></script>
+        <script src="microbit_blocks/generators/relay.js"></script>
+        <script src="microbit_blocks/generators/servo.js"></script>
+        <script src="microbit_blocks/generators/speech.js"></script>
+        <script src="microbit_blocks/generators/temperature.js"></script>
+        <script src="microbit_blocks/generators/time.js"></script>
+        <script src="microbit_blocks/generators/touch.js"></script>
+        <script src="microbit_blocks/generators/python.js"></script>
+        <script src="blockly/msg/js/en.js"></script>
+	    <script src="microbit_blocks/messages/en/messages.js"></script>
+        <script src="static/js/ResizeSensor.js"></script>
+        <script src="static/js/ElementQueries.js"></script>
+        <script src="python-main.js"
+            type="application/javascript"></script>
+        <script>vex.defaultOptions.className = 'vex-theme-wireframe';</script>
+        <script>
+// Call the web_editor function to start the editor running.
+web_editor({
+    'translate': {
+      'code_snippets': {
+        'title': 'Code Snippets',
+        'description': "Code snippets are short blocks of code to re-use in your own programs. There are snippets for most common things you'll want to do using MicroPython.",
+        'instructions': "Select one of the snippets below, or type the snippet's trigger then tap the TAB key.",
+        'trigger_heading': 'trigger',
+        'description_heading': 'description',
+        'docs': 'create a comment to describe your code',
+        'wh': 'while some condition is True, keep looping over some code',
+        'with': 'do some stuff with something assigned to a name',
+        'cl': 'create a new class that defines the behaviour of a new type of object',
+        'def': 'define a named function that takes some arguments and optionally add a description',
+        'if': 'if some condition is True, do something',
+        'ei': 'else if some other condition is True, do something',
+        'el': 'else do some other thing',
+        'for': 'for each item in a collection of items do something with each item',
+        'try': 'try doing something and handle exceptions (errors)'
+      },
+      'share': {
+        'title': 'Share Code',
+        'instructions': 'Use a password and optional hint (to help you remember the password) to securely create a link to share your code with others.',
+        'passphrase': 'Password: ',
+        'hint': 'Password hint: ',
+        'button': 'Create Link',
+        'description': 'This URL points to your code:',
+        'shortener': 'This is a short version of the link:'
+      },
+      'decrypt': {
+        'title': 'Decrypt Source Code',
+        'instructions': 'Enter a password to decrypt the source code.',
+        'passphrase': 'Password: ',
+        'button': 'Decrypt'
+      },
+      'alerts': {
+        'download': 'Safari has a bug that means your work will be downloaded as an un-named file. Please rename it to something ending in .hex. Alternatively, use a browser such as Firefox or Chrome. They do not suffer from this bug.',
+        'save': 'Safari has a bug that means your work will be downloaded as an un-named file. Please rename it to something ending in .py. Alternatively, use a browser such as Firefox or Chrome. They do not suffer from this bug.',
+        'length': 'Oops! Your script is to long given the limited memory on the device.',
+        'snippets': 'Snippets are disabled when blockly is enabled.'
+      },
+      'confirms': {
+        'quit': "Some of your changes have not been saved. Quit anyway?",
+        'blocks': "You have unsaved code. Using blocks will change your code. You may lose your changes. Do you want to continue?"
+      },
+      'code': {
+        'start': "# Add your Python code here. E.g.\n" +
+                 "from microbit import *\n\n\n" +
+                 "while True:\n" +
+                 "    display.scroll('Hello, World!')\n" +
+                 "    display.show(Image.HEART)\n" +
+                 "    sleep(2000)\n"
+      },
+      'drop': {
+        'python': 'Extracted from a Python file',
+        'hex': 'Extracted from a hex file'
+      },
+      'messagebar': {
+        'title': 'This editor is out of date!',
+        'link': 'Click here',
+        'instructions': 'to open the latest version.',
+        'close': 'Hide'
+      },
+      'load': {
+        'title': 'Load Script or HEX file',
+        'instructions': 'Drag and drop a .hex or .py file in here to open it.',
+        'submit': 'Load',
+        'toggle-drop': 'Or drag and drop a file',
+        'toggle-file': 'Or pick a file'
+      }
+    },
+    'flags': {
+      'blocks': true,
+      'snippets': true,
+      'share': true,
+      'experimental': false
+    },
+});
+        </script>
+<xml xmlns="http://www.w3.org/1999/xhtml" id="blockly-toolbox" style="display: none;">
+  <category name="Logic" colour="#5C81A6">
+    <block type="controls_if">
+      <value name="IF0">
+        <block type="logic_compare">
+          <field name="OP">EQ</field>
+        </block>
+      </value>
+    </block>
+    <block type="controls_if"></block>
+    <block type="logic_compare">
+      <field name="OP">EQ</field>
+    </block>
+    <block type="logic_operation">
+      <field name="OP">AND</field>
+    </block>
+    <block type="logic_negate"></block>
+    <block type="logic_boolean">
+      <field name="BOOL">TRUE</field>
+    </block>
+    <block type="logic_null"></block>
+    <block type="logic_ternary"></block>
+  </category>
+  <category name="Loops" colour="#5CA65C">
+    <block type="main_block"></block>
+    <block type="controls_repeat_ext">
+      <value name="TIMES">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_whileUntil">
+      <field name="MODE">WHILE</field>
+    </block>
+    <block type="controls_for">
+      <field name="VAR" id="p(1APX:tPbR@_S=dKwsa" variabletype="">i</field>
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+      <value name="BY">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_forEach">
+      <field name="VAR" id="LV!pxm=y2ER5K*iRn=gY" variabletype="">j</field>
+    </block>
+    <block type="controls_flow_statements">
+      <field name="FLOW">BREAK</field>
+    </block>
+  </category>
+  <category name="Math" colour="#5C68A6">
+    <block type="math_round">
+      <field name="OP">ROUND</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">3.1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_number">
+      <field name="NUM">0</field>
+    </block>
+    <block type="flex_dropdown_state">
+      <field name="STATE">1</field>
+    </block>
+    <block type="math_single">
+      <field name="OP">ROOT</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">9</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_trig">
+      <field name="OP">SIN</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">45</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_constant">
+      <field name="CONSTANT">PI</field>
+    </block>
+    <block type="math_number_property">
+      <mutation divisor_input="false"></mutation>
+      <field name="PROPERTY">EVEN</field>
+      <value name="NUMBER_TO_CHECK">
+        <shadow type="math_number">
+          <field name="NUM">0</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_arithmetic">
+      <field name="OP">ADD</field>
+      <value name="A">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="B">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_on_list">
+      <mutation op="SUM"></mutation>
+      <field name="OP">SUM</field>
+    </block>
+    <block type="math_modulo">
+      <value name="DIVIDEND">
+        <shadow type="math_number">
+          <field name="NUM">64</field>
+        </shadow>
+      </value>
+      <value name="DIVISOR">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_constrain">
+      <value name="VALUE">
+        <shadow type="math_number">
+          <field name="NUM">50</field>
+        </shadow>
+      </value>
+      <value name="LOW">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="HIGH">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_int">
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_float"></block>
+  </category>
+  <category name="Text" colour="#5CA68D">
+    <block type="text_indexOf">
+      <field name="END">FIRST</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="{ele#[cPt4mmRA7Au5=a" variabletype="">text</field>
+        </block>
+      </value>
+      <value name="FIND">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text">
+      <field name="TEXT"></field>
+    </block>
+    <block type="text_join">
+      <mutation items="2"></mutation>
+    </block>
+    <block type="text_append">
+      <field name="VAR" id="):u%7oo=(eS}86eD[3uf" variabletype="">item</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT"></field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_length">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_isEmpty">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT"></field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_print">
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_charAt">
+      <mutation at="true"></mutation>
+      <field name="WHERE">FROM_START</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="{ele#[cPt4mmRA7Au5=a" variabletype="">text</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_getSubstring">
+      <mutation at1="true" at2="true"></mutation>
+      <field name="WHERE1">FROM_START</field>
+      <field name="WHERE2">FROM_START</field>
+      <value name="STRING">
+        <block type="variables_get">
+          <field name="VAR" id="{ele#[cPt4mmRA7Au5=a" variabletype="">text</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_changeCase">
+      <field name="CASE">UPPERCASE</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_trim">
+      <field name="MODE">BOTH</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_prompt_ext">
+      <mutation type="TEXT"></mutation>
+      <field name="TYPE">TEXT</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+  </category>
+  <category name="Colour" colour="#805ba5">
+    <block type="colour_picker">
+      <field name="COLOUR">#ff0000</field>
+    </block>
+    <block type="colour_random"></block>
+    <block type="colour_rgb">
+      <value name="RED">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+      <value name="GREEN">
+        <shadow type="math_number">
+          <field name="NUM">50</field>
+        </shadow>
+      </value>
+      <value name="BLUE">
+        <shadow type="math_number">
+          <field name="NUM">0</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="colour_blend">
+      <value name="COLOUR1">
+        <shadow type="colour_picker">
+          <field name="COLOUR">#ff0000</field>
+        </shadow>
+      </value>
+      <value name="COLOUR2">
+        <shadow type="colour_picker">
+          <field name="COLOUR">#3333ff</field>
+        </shadow>
+      </value>
+      <value name="RATIO">
+        <shadow type="math_number">
+          <field name="NUM">0.5</field>
+        </shadow>
+      </value>
+    </block>
+  </category>
+  <category name="Time" colour="#a55b5b">
+    <block type="time_sleep">
+      <field name="DURATION">mil</field>
+      <value name="time">
+        <block type="math_number">
+          <field name="NUM">100</field>
+        </block>
+      </value>
+    </block>
+    <block type="timer_event_every">
+      <field name="type">sec</field>
+      <value name="time">
+        <block type="math_number">
+          <field name="NUM">5</field>
+        </block>
+      </value>
+    </block>
+    <block type="timer_event_after">
+      <field name="type">sec</field>
+      <value name="time">
+        <block type="math_number">
+          <field name="NUM">5</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="Message" colour="#5ba5a5">
+    <block type="message_send_message">
+      <value name="TOPIC">
+        <block type="text">
+          <field name="TEXT">test</field>
+        </block>
+      </value>
+      <value name="MSG">
+        <block type="text">
+          <field name="TEXT">hello blocky</field>
+        </block>
+      </value>
+    </block>
+    <block type="message_send_log">
+      <value name="MSG">
+        <block type="text">
+          <field name="TEXT">test</field>
+        </block>
+      </value>
+    </block>
+    <block type="message_subscribe_topic">
+      <field name="MSG" id="Gn~~`EYysV:EJE^uU_Ie" variabletype="">message</field>
+      <field name="TYPE">STRING</field>
+      <value name="TOPIC">
+        <block type="text">
+          <field name="TEXT">test</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+  <category name="Functions" colour="#9A5CA6" custom="PROCEDURE"></category>
+  <sep></sep>
+  <category name="Input"></category>
+  <category name="Button" colour="#5ba5a5">
+    <block type="button_setup">
+      <field name="NAME" id="r%,WG8jzwamQIO4cr5?t" variabletype="">button</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="button_is_pressed">
+      <field name="BUTTON" id="r%,WG8jzwamQIO4cr5?t" variabletype="">button</field>
+    </block>
+  </category>
+  <category name="Light" colour="#5ba5a5">
+    <block type="light_setup_photocell">
+      <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="light_get_light_photocell">
+      <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
+    </block>
+    <block type="light_setup_bh1750">
+      <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="light_get_light_bh1750">
+      <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
+    </block>
+  </category>
+  <category name="Temperature" colour="#5ba5a5">
+    <block type="dht_setup">
+      <field name="NAME" id="5Iom8N|b+f`Cy8.L-wt9" variabletype="">dht</field>
+      <field name="DHT">dht11</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="dht_measure">
+      <field name="NAME" id="5Iom8N|b+f`Cy8.L-wt9" variabletype="">dht</field>
+    </block>
+    <block type="dht_get_value">
+      <field name="NAME" id="5Iom8N|b+f`Cy8.L-wt9" variabletype="">dht</field>
+      <field name="TYPE">TEMP</field>
+    </block>
+    <block type="ds18b20_setup">
+      <field name="NAME" id="PXgJ)oI~xM_=wow67e|%" variabletype="">ds18b20</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="ds18b20_convert_temp">
+      <field name="NAME" id="PXgJ)oI~xM_=wow67e|%" variabletype="">ds18b20</field>
+    </block>
+    <block type="ds18b20_get_value">
+      <field name="NAME" id="PXgJ)oI~xM_=wow67e|%" variabletype="">ds18b20</field>
+    </block>
+  </category>
+  <category name="Soil Moisture" colour="#5ba5a5">
+    <block type="moisture_setup">
+      <field name="NAME" id="P.0QUg$;KXt!P7q6m7gT" variabletype="">moisture</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="moisture_get_value">
+      <field name="NAME" id="P.0QUg$;KXt!P7q6m7gT" variabletype="">moisture</field>
+    </block>
+  </category>
+  <category name="Motion Sensor" colour="#5ba5a5">
+    <block type="motion_setup">
+      <field name="NAME" id=":d_sS5e]NAYC~R%-C|O5" variabletype="">pir</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="motion_get_value">
+      <field name="NAME" id=":d_sS5e]NAYC~R%-C|O5" variabletype="">pir</field>
+    </block>
+  </category>
+  <category name="Gas Sensor" colour="#5ba5a5">
+    <block type="gas_sensor"></block>
+  </category>
+  <category name="Touch Sensor" colour="#5ba5a5">
+    <block type="touch_setup">
+      <field name="NAME" id="g+eeND~n2thi!L:+uJf;" variabletype="">touch</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="touch_get_value">
+      <field name="NAME" id="g+eeND~n2thi!L:+uJf;" variabletype="">touch</field>
+    </block>
+  </category>
+  <category name="Control"></category>
+  <category name="LED" colour="#93a55b">
+    <block type="led_setup">
+      <field name="NAME" id="PJ)VL+3H*)T*]BU]Pu)O" variabletype="">led</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="led_set">
+      <field name="NAME" id="PJ)VL+3H*)T*]BU]Pu)O" variabletype="">led</field>
+      <value name="STATE">
+        <block type="flex_dropdown_state">
+          <field name="STATE">1</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="Buzzer" colour="#a55b5b">
+    <block type="buzzer_setup">
+      <field name="NAME" id="dwni@;/Z*I,wYYoI%cFP" variabletype="">buzzer</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="buzzer_set">
+      <field name="NAME" id="dwni@;/Z*I,wYYoI%cFP" variabletype="">buzzer</field>
+      <value name="STATE">
+        <block type="flex_dropdown_state">
+          <field name="STATE">1</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="Relay" colour="#a55b5b">
+    <block type="relay_setup">
+      <field name="NAME" id="Qpstyu#@,^q:*e}UHlD`" variabletype="">relay</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="relay_set">
+      <field name="NAME" id="Qpstyu#@,^q:*e}UHlD`" variabletype="">relay</field>
+      <value name="STATE">
+        <block type="flex_dropdown_state">
+          <field name="STATE">1</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="Mosfet" colour="#a55b5b">
+    <block type="mosfet_setup">
+      <field name="NAME" id="H}f%CKS[!VX,:m}prBVS" variabletype="">mosfet</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="mosfet_set">
+      <field name="NAME" id="H}f%CKS[!VX,:m}prBVS" variabletype="">mosfet</field>
+      <value name="STATE">
+        <block type="flex_dropdown_state">
+          <field name="STATE">1</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="Servo" colour="#a55b5b">
+    <block type="servo_setup">
+      <field name="NAME" id="Zo{}BpRF*~IoV`_m==XU" variabletype="">servo</field>
+      <field name="PORT">p1</field>
+    </block>
+    <block type="servo_set_angle_fix">
+      <field name="NAME" id="Zo{}BpRF*~IoV`_m==XU" variabletype="">servo</field>
+      <field name="ANGLE">90</field>
+    </block>
+    <block type="servo_set_angle_var">
+      <field name="NAME" id="Zo{}BpRF*~IoV`_m==XU" variabletype="">servo</field>
+      <value name="NAME">
+        <block type="math_number">
+          <field name="NUM">90</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="Music" colour="#a55b5b"></category>
+  <category name="Display"></category>
+  <category name="NeoPixel" colour="#93a55b">
+    <block type="neopixel_setup">
+      <field name="NAME" id="k+Gu}o*:,P^;=~vFB)Ef" variabletype="">neopixel</field>
+      <field name="PORT">p1</field>
+      <field name="PIXELS">8</field>
+    </block>
+    <block type="neopixel_set_color_all">
+      <field name="NAME" id="k+Gu}o*:,P^;=~vFB)Ef" variabletype="">neopixel</field>
+      <value name="COLOR">
+        <block type="colour_picker">
+          <field name="COLOUR">#ff0000</field>
+        </block>
+      </value>
+    </block>
+    <block type="neopixel_set_color_all">
+      <field name="NAME" id="k+Gu}o*:,P^;=~vFB)Ef" variabletype="">neopixel</field>
+      <value name="COLOR">
+        <block type="colour_rgb">
+          <value name="RED">
+            <shadow type="math_number">
+              <field name="NUM">100</field>
+            </shadow>
+          </value>
+          <value name="GREEN">
+            <shadow type="math_number">
+              <field name="NUM">50</field>
+            </shadow>
+          </value>
+          <value name="BLUE">
+            <shadow type="math_number">
+              <field name="NUM">0</field>
+            </shadow>
+          </value>
+        </block>
+      </value>
+    </block>
+    <block type="neopixel_set_color">
+      <field name="NAME" id="k+Gu}o*:,P^;=~vFB)Ef" variabletype="">neopixel</field>
+      <value name="PIXEL">
+        <block type="math_number">
+          <field name="NUM">1</field>
+        </block>
+      </value>
+      <value name="COLOR">
+        <block type="colour_picker">
+          <field name="COLOUR">#ff0000</field>
+        </block>
+      </value>
+    </block>
+    <block type="neopixel_set_color">
+      <field name="NAME" id="k+Gu}o*:,P^;=~vFB)Ef" variabletype="">neopixel</field>
+      <value name="PIXEL">
+        <block type="math_number">
+          <field name="NUM">1</field>
+        </block>
+      </value>
+      <value name="COLOR">
+        <block type="colour_rgb">
+          <value name="RED">
+            <shadow type="math_number">
+              <field name="NUM">100</field>
+            </shadow>
+          </value>
+          <value name="GREEN">
+            <shadow type="math_number">
+              <field name="NUM">50</field>
+            </shadow>
+          </value>
+          <value name="BLUE">
+            <shadow type="math_number">
+              <field name="NUM">0</field>
+            </shadow>
+          </value>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="OLED LCD" colour="#93a55b">
+    <block type="oled_setup">
+      <field name="NAME" id="|GsExAPZA/IVSD7O$q@1" variabletype="">oled</field>
+      <field name="PORT">p1</field>
+      <field name="WIDTH">128</field>
+      <field name="HEIGHT">64</field>
+    </block>
+    <block type="oled_fill">
+      <field name="NAME" id="|GsExAPZA/IVSD7O$q@1" variabletype="">oled</field>
+      <field name="COLOR">0</field>
+    </block>
+    <block type="oled_set_pixel">
+      <field name="NAME" id="|GsExAPZA/IVSD7O$q@1" variabletype="">oled</field>
+      <field name="COLOR">1</field>
+      <value name="POS_X">
+        <block type="math_number">
+          <field name="NUM">64</field>
+        </block>
+      </value>
+      <value name="POS_Y">
+        <block type="math_number">
+          <field name="NUM">32</field>
+        </block>
+      </value>
+    </block>
+    <block type="oled_set_text">
+      <field name="NAME" id="|GsExAPZA/IVSD7O$q@1" variabletype="">oled</field>
+      <value name="TEXT">
+        <block type="text">
+          <field name="TEXT">hello</field>
+        </block>
+      </value>
+      <value name="POS_X">
+        <block type="math_number">
+          <field name="NUM">32</field>
+        </block>
+      </value>
+      <value name="POS_Y">
+        <block type="math_number">
+          <field name="NUM">16</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="LED Bar" colour="#93a55b"></category>
+  <category name="Communication"></category>
+  <category name="Bluetooth" colour="#805ba5"></category>
+  <category name="LORA" colour="#805ba5"></category>
+  <sep></sep>
+  <category name="Advanced"></category>
+  <category name="Pins " colour="#805ba5">
+    <block type="pin_setup">
+      <field name="NAME" id="o]#y6C|*-RLp3]%,|loB" variabletype="">pin</field>
+      <field name="PIN">0</field>
+      <field name="MODE">DIGITAL_INPUT</field>
+    </block>
+    <block type="pin_set_value">
+      <field name="NAME" id="o]#y6C|*-RLp3]%,|loB" variabletype="">pin</field>
+      <value name="NAME">
+        <block type="math_number">
+          <field name="NUM">0</field>
+        </block>
+      </value>
+    </block>
+    <block type="pin_read_value">
+      <field name="NAME" id="o]#y6C|*-RLp3]%,|loB" variabletype="">pin</field>
+    </block>
+  </category>
+  <category name="List" colour="#805ba5">
+    <block type="lists_create_with">
+      <mutation items="0"></mutation>
+    </block>
+    <block type="lists_create_with">
+      <mutation items="3"></mutation>
+    </block>
+    <block type="lists_repeat">
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">5</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_length"></block>
+    <block type="lists_isEmpty"></block>
+    <block type="lists_indexOf">
+      <field name="END">FIRST</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="]W;Bl9JT?26_-f^;Q7Xg" variabletype="">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_getIndex">
+      <mutation statement="false" at="true"></mutation>
+      <field name="MODE">GET</field>
+      <field name="WHERE">FROM_START</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="]W;Bl9JT?26_-f^;Q7Xg" variabletype="">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_setIndex">
+      <mutation at="true"></mutation>
+      <field name="MODE">SET</field>
+      <field name="WHERE">FROM_START</field>
+      <value name="LIST">
+        <block type="variables_get">
+          <field name="VAR" id="]W;Bl9JT?26_-f^;Q7Xg" variabletype="">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_getSublist">
+      <mutation at1="true" at2="true"></mutation>
+      <field name="WHERE1">FROM_START</field>
+      <field name="WHERE2">FROM_START</field>
+      <value name="LIST">
+        <block type="variables_get">
+          <field name="VAR" id="]W;Bl9JT?26_-f^;Q7Xg" variabletype="">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_split">
+      <mutation mode="SPLIT"></mutation>
+      <field name="MODE">SPLIT</field>
+      <value name="DELIM">
+        <shadow type="text">
+          <field name="TEXT">,</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_sort">
+      <field name="TYPE">NUMERIC</field>
+      <field name="DIRECTION">1</field>
+    </block>
+  </category>
+  <sep></sep>
+  <category name="Services"></category>
+  <category name="Email " colour="#805ba5"></category>
+  <category name="Facebook " colour="#805ba5"></category>
+  <category name="Twitter " colour="#805ba5"></category>
+  <category name="IFTTT " colour="#805ba5"></category>
+  <category name="Youtube " colour="#805ba5"></category>
+  <category name="Database " colour="#805ba5"></category>
+</xml>
+        <div id="firmware" style="display: none;">
+</div>
+    </body>
+</html>

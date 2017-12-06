@@ -1,0 +1,78 @@
+0.1.0
+-----
+
+* Add "Experimental" background image.
+* Update help pages to reflect the latest changes.
+* Add awareness of versioning and related manifest when available.
+* Add file load button with drag and drop capabilities.
+
+0.0.10
+------
+
+* Fix outstanding block related gremlins (with tests).
+
+0.0.9
+-----
+
+* Add zoom to blocks (thanks Carlos).
+* Fix next-block on panic and reset blocks (thanks again Carlos).
+* Fix GIT submodule misconfiguration (thanks again [again] Carlos).
+* Disable code snippets when blockly is active.
+* Update documentation as per the above changes.
+
+0.0.8
+-----
+
+* Add blockly support (requires GIT sub-modules).
+* Add config object containing translation strings.
+* Add feature flags to the config object.
+* Check for size of Python script before flashing (added tests for this too).
+* Move editor instantiation to within the HTML.
+* Updated help to include latest UI changes.
+* Updated README in light of changes above.
+
+0.0.7
+-----
+
+* If there's unsaved work, ask user for confirmation if moving away from editor.
+* Add save button to download raw Python script.
+* Add drag to load for Python scripts and hex files.
+
+0.0.6
+-----
+
+* Remove TouchDevelop specific elements.
+* Make a stand-alone version of the editor.
+* Simplification of the UI.
+* Add a "share" button to create a tiny URL to point at the current script.
+* Use query strings to override the script name, comment and code.
+* Update to the latest version of MicroPython:
+    - Various minor refactors.
+    - Audio
+    - Speech
+    - Radio
+    - input() builtin
+* Documentation work / tidy up.
+
+0.0.5
+-----
+
+* Update to the latest version of MicroPython:
+    - Various minor code refactors.
+    - More efficient ticker (reduces overhead of display update by 90%).
+    - Add builtin set and frozenset types (from core Python).
+    - Don't show SystemExit or KeyboardInterrupt exceptions on the display.
+* Update bug in editor that caused the status icon not to update to cloud.
+* Added test script here: https://stage.microbit.co.uk/hoqumw
+* Revised button-press code to be simpler.
+* Minor documentation updates.
+
+0.0.4
+-----
+
+Initial tested public release.
+
+0.1-0.3
+-------
+
+Private test versions.
