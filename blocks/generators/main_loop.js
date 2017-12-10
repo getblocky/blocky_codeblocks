@@ -18,6 +18,7 @@ Blockly.Python['main_block'] = function(block) {
   var loopFunctionName = Blockly.Python.provideFunction_(
     'loop',
     ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '():',
+      Blockly.Python.INDENT + 'global blocky',
       Blockly.Python.INDENT + 'while True:',
       Blockly.Python.INDENT + Blockly.Python.INDENT + 'blocky.process()',  
       Blockly.Python.prefixLines(statements_loop, Blockly.Python.INDENT)

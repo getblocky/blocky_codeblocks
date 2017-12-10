@@ -532,6 +532,10 @@ function web_editor(config) {
                         scaleSpeed: zoomScaleSteps + 1.0
                     }
                 });
+
+                Blockly.Xml.domToWorkspace(document.getElementById('workspaceBlocks'),
+                    workspace);
+                
                 function myUpdateFunction(event) {
                     var code = Blockly.Python.workspaceToCode(workspace);
                     EDITOR.setCode(code);

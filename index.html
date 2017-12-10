@@ -244,34 +244,34 @@ Nicholas and Damien.
         <script src="blockly/blockly_compressed.js"></script>
         <script src="blockly/blocks_compressed.js"></script>
         <script src="blockly/python_compressed.js"></script>
-        <script src="microbit_blocks/blocks/blocky.js"></script>        
-        <script src="microbit_blocks/generators/main_loop.js"></script>
-        <script src="microbit_blocks/generators/buttons.js"></script>
-        <script src="microbit_blocks/generators/buzzer.js"></script>
-        <script src="microbit_blocks/generators/compass.js"></script>
-        <script src="microbit_blocks/generators/display.js"></script>
-        <script src="microbit_blocks/generators/image.js"></script>
-        <script src="microbit_blocks/generators/lcd.js"></script>
-        <script src="microbit_blocks/generators/led.js"></script>
-        <script src="microbit_blocks/generators/light.js"></script>
-        <script src="microbit_blocks/generators/message.js"></script>
-        <script src="microbit_blocks/generators/microbit.js"></script>
-        <script src="microbit_blocks/generators/moisture.js"></script>
-        <script src="microbit_blocks/generators/mosfet.js"></script>
-        <script src="microbit_blocks/generators/motion.js"></script>
-        <script src="microbit_blocks/generators/music.js"></script>
-        <script src="microbit_blocks/generators/neopixel.js"></script>
-        <script src="microbit_blocks/generators/pins.js"></script>
-        <script src="microbit_blocks/generators/radio.js"></script>
-        <script src="microbit_blocks/generators/relay.js"></script>
-        <script src="microbit_blocks/generators/servo.js"></script>
-        <script src="microbit_blocks/generators/speech.js"></script>
-        <script src="microbit_blocks/generators/temperature.js"></script>
-        <script src="microbit_blocks/generators/time.js"></script>
-        <script src="microbit_blocks/generators/touch.js"></script>
-        <script src="microbit_blocks/generators/python.js"></script>
+        <script src="blocks/blocks/blocky.js"></script>        
+        <script src="blocks/generators/main_loop.js"></script>
+        <script src="blocks/generators/buttons.js"></script>
+        <script src="blocks/generators/buzzer.js"></script>
+        <script src="blocks/generators/compass.js"></script>
+        <script src="blocks/generators/display.js"></script>
+        <script src="blocks/generators/image.js"></script>
+        <script src="blocks/generators/lcd.js"></script>
+        <script src="blocks/generators/led.js"></script>
+        <script src="blocks/generators/light.js"></script>
+        <script src="blocks/generators/message.js"></script>
+        <script src="blocks/generators/microbit.js"></script>
+        <script src="blocks/generators/moisture.js"></script>
+        <script src="blocks/generators/mosfet.js"></script>
+        <script src="blocks/generators/motion.js"></script>
+        <script src="blocks/generators/music.js"></script>
+        <script src="blocks/generators/neopixel.js"></script>
+        <script src="blocks/generators/pins.js"></script>
+        <script src="blocks/generators/radio.js"></script>
+        <script src="blocks/generators/relay.js"></script>
+        <script src="blocks/generators/servo.js"></script>
+        <script src="blocks/generators/speech.js"></script>
+        <script src="blocks/generators/temperature.js"></script>
+        <script src="blocks/generators/time.js"></script>
+        <script src="blocks/generators/touch.js"></script>
+        <script src="blocks/generators/python.js"></script>
         <script src="blockly/msg/js/en.js"></script>
-	    <script src="microbit_blocks/messages/en/messages.js"></script>
+	      <script src="blocks/messages/en/messages.js"></script>
         <script src="static/js/ResizeSensor.js"></script>
         <script src="static/js/ElementQueries.js"></script>
         <script src="python-main.js"
@@ -381,7 +381,7 @@ web_editor({
     <block type="logic_ternary"></block>
   </category>
   <category name="Loops" colour="#5CA65C">
-    <block type="main_block"></block>
+    <block type="main_block" deletable="false"></block>
     <block type="controls_repeat_ext">
       <value name="TIMES">
         <shadow type="math_number">
@@ -1091,6 +1091,11 @@ web_editor({
   <category name="IFTTT " colour="#805ba5"></category>
   <category name="Youtube " colour="#805ba5"></category>
   <category name="Database " colour="#805ba5"></category>
+</xml>
+
+<xml id="workspaceBlocks" style="display:none">
+  <variables></variables>
+  <block type="main_block" deletable="false" id="^@{93%8760h!ILL-P0Co" x="88" y="-88"></block>
 </xml>
         <div id="firmware" style="display: none;">
 </div>
