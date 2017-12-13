@@ -262,6 +262,7 @@ Nicholas and Damien.
         <script src="blocks/generators/music.js"></script>
         <script src="blocks/generators/neopixel.js"></script>
         <script src="blocks/generators/pins.js"></script>
+        <script src="blocks/generators/pwm.js"></script>
         <script src="blocks/generators/radio.js"></script>
         <script src="blocks/generators/relay.js"></script>
         <script src="blocks/generators/servo.js"></script>
@@ -864,6 +865,38 @@ web_editor({
       <value name="NAME">
         <block type="math_number">
           <field name="NUM">90</field>
+        </block>
+      </value>
+    </block>
+  </category>
+  <category name="PWM">
+    <block type="pwm_setup">
+      <field name="NAME" id="PLliM=2Wp]uM^WxOMd}3" variabletype="">pwm</field>
+      <field name="PORT">p1</field>
+      <value name="FREQ">
+        <block type="math_number">
+          <field name="NUM">1000</field>
+        </block>
+      </value>
+      <value name="DUTY">
+        <block type="math_number">
+          <field name="NUM">0</field>
+        </block>
+      </value>
+    </block>
+    <block type="pwm_set_duty">
+      <field name="NAME" id="PLliM=2Wp]uM^WxOMd}3" variabletype="">pwm</field>
+      <value name="DUTY">
+        <block type="math_number">
+          <field name="NUM">0</field>
+        </block>
+      </value>
+    </block>
+    <block type="pwm_set_freq">
+      <field name="NAME" id="PLliM=2Wp]uM^WxOMd}3" variabletype="">pwm</field>
+      <value name="FREQ">
+        <block type="math_number">
+          <field name="NUM">1000</field>
         </block>
       </value>
     </block>

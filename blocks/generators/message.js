@@ -27,20 +27,37 @@ Blockly.Python['message_subscribe_topic'] = function(block) {
   var dropdown_type = block.getFieldValue('TYPE');
   var statements_handler = Blockly.Python.statementToCode(block, 'HANDLER');
   // TODO: Assemble Python into code variable.
+  var globals = ['blocky'];
+  var varName;
+  var workspace = block.workspace;
+  var variables = workspace.getAllVariables() || [];
+  for (var i = 0, variable; variable = variables[i]; i++) {
+    varName = variable.name;
+    if (varName != variable_msg)
+      globals.push(Blockly.Python.variableDB_.getName(varName,
+        Blockly.Variables.NAME_TYPE));
+  }
+  globals = globals.length ? Blockly.Python.INDENT + 'global ' + globals.join(', ') : '';
+
   var cbFunctionName = '';
 
   if (dropdown_type == 'NUMBER') {
     cbFunctionName = Blockly.Python.provideFunction_(
       'subscribe_callback_' + Math.floor(Math.random() * 50),
-      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(topic, message):',
-        '  message = float(message)',
+      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(topic, ' + variable_msg + '):',
+        globals,  
+        Blockly.Python.INDENT +  'try:',
+        Blockly.Python.INDENT +  Blockly.Python.INDENT +  variable_msg + ' = float('+ variable_msg +') if "." in ' + variable_msg + ' else int('+variable_msg+')',
+        Blockly.Python.INDENT +  'except:',
+        Blockly.Python.INDENT +  Blockly.Python.INDENT +  variable_msg + ' = 0',
         statements_handler
       ]);
   } else {
     cbFunctionName = Blockly.Python.provideFunction_(
       'subscribe_callback_' + Math.floor(Math.random() * 50),
-      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(topic, message):',
-        statements_handler
+      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(topic, ' + variable_msg + '):',
+        globals,
+        statements_handler || Blockly.Python.PASS
       ]);
   }
   var code = 'blocky.subscribe(' + value_topic + ', ' + cbFunctionName + ')\n';

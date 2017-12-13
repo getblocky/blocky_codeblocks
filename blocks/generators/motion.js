@@ -4,7 +4,7 @@ goog.provide('Blockly.Python.buttons');
 goog.require('Blockly.Python');
 
 // Any imports need to be reserved words
-Blockly.Python.addReservedWords('microbit');
+Blockly.Python.addReservedWords('machine');
 
 Blockly.Python['motion_setup'] = function(block) {
   var variable_name = Blockly.Python.variableDB_.getName(block.getFieldValue('NAME'), Blockly.Variables.NAME_TYPE);

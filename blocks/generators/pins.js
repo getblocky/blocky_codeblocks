@@ -22,8 +22,6 @@ Blockly.Python['pin_setup'] = function(block) {
     code = variable_name + ' = machine.Pin(' + number_pin + ', machine.Pin.OUT)\n';
   } else if (dropdown_mode == 'ANALOG_INPUT') {
     code = variable_name + ' = machine.ADC(' + number_pin + ')\n';
-  } else if (dropdown_mode == 'PWM') {
-    code = variable_name + ' = machine.PWM(machine.Pin(' + number_pin + '), freq=1000, duty=0)\n';
   }
 
   return code;
@@ -51,7 +49,8 @@ Blockly.Python['flex_dropdown_state'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = dropdown_state;
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.Python.ORDER_NONE];
+  return code;
+  //return [code, Blockly.Python.ORDER_NONE];
 };
 
 Blockly.Python['flex_dropdown_pin'] = function(block) {

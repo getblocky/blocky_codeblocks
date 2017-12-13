@@ -3,47 +3,47 @@
     <block type="button_is_pressed"></block>
     <block type="button_setup"></block>
   </category>
-  <category name="Buzzer" colour="20">
+  <category name="Buzzer" colour="18">
     <block type="buzzer_setup"></block>
     <block type="buzzer_set"></block>
   </category>
-  <category name="Lcd" colour="40">
+  <category name="Lcd" colour="36">
     <block type="oled_setup"></block>
     <block type="oled_fill"></block>
     <block type="oled_set_pixel"><value name="POS_X"><shadow type="math_number"><field name="NUM">0</field></shadow></value><value name="POS_Y"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
     <block type="oled_set_text"><value name="POS_X"><shadow type="math_number"><field name="NUM">0</field></shadow></value><value name="POS_Y"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
   </category>
-  <category name="Led" colour="60">
+  <category name="Led" colour="54">
     <block type="led_setup"></block>
     <block type="led_set"></block>
   </category>
-  <category name="Light" colour="80">
+  <category name="Light" colour="72">
     <block type="light_setup_photocell"></block>
     <block type="light_setup_bh1750"></block>
     <block type="light_get_light_bh1750"></block>
     <block type="light_get_light_photocell"></block>
   </category>
-  <category name="Main_loop" colour="100">
+  <category name="Main_loop" colour="90">
     <block type="main_block"></block>
   </category>
-  <category name="Message" colour="120">
+  <category name="Message" colour="108">
     <block type="message_send_message"></block>
     <block type="message_send_log"></block>
     <block type="message_subscribe_topic"></block>
   </category>
-  <category name="Moisture" colour="140">
+  <category name="Moisture" colour="126">
     <block type="moisture_setup"></block>
     <block type="moisture_get_value"></block>
   </category>
-  <category name="Mosfet" colour="160">
+  <category name="Mosfet" colour="144">
     <block type="mosfet_setup"></block>
     <block type="mosfet_set"></block>
   </category>
-  <category name="Motion" colour="180">
+  <category name="Motion" colour="162">
     <block type="motion_setup"></block>
     <block type="motion_get_value"></block>
   </category>
-  <category name="Music" colour="200">
+  <category name="Music" colour="180">
     <block type="microbit_music_play_built_in"></block>
     <block type="microbit_music_pitch"></block>
     <block type="microbit_music_play_list_of_notes"></block>
@@ -52,28 +52,33 @@
     <block type="microbit_music_set_tempo"><value name="ticks"><shadow type="math_number"><field name="NUM">4</field></shadow></value><value name="bpm"><shadow type="math_number"><field name="NUM">120</field></shadow></value></block>
     <block type="microbit_music_get_tempo"></block>
   </category>
-  <category name="Neopixel" colour="220">
+  <category name="Neopixel" colour="198">
     <block type="neopixel_setup"></block>
     <block type="neopixel_set_color_all"></block>
     <block type="neopixel_set_color"></block>
   </category>
-  <category name="Pins" colour="240">
+  <category name="Pins" colour="216">
     <block type="pin_setup"></block>
     <block type="pin_set_value"><value name="NAME"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
     <block type="pin_read_value"></block>
     <block type="flex_dropdown_state"></block>
     <block type="flex_dropdown_pin"></block>
   </category>
-  <category name="Relay" colour="260">
+  <category name="Pwm" colour="234">
+    <block type="pwm_setup"><value name="FREQ"><shadow type="math_number"><field name="NUM">0</field></shadow></value><value name="DUTY"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
+    <block type="pwm_set_duty"><value name="DUTY"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
+    <block type="pwm_set_freq"><value name="FREQ"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
+  </category>
+  <category name="Relay" colour="252">
     <block type="relay_setup"></block>
     <block type="relay_set"></block>
   </category>
-  <category name="Servo" colour="280">
+  <category name="Servo" colour="270">
     <block type="servo_set_angle_var"></block>
     <block type="servo_set_angle_fix"></block>
     <block type="servo_setup"></block>
   </category>
-  <category name="Temperature" colour="300">
+  <category name="Temperature" colour="288">
     <block type="dht_setup"></block>
     <block type="dht_measure"></block>
     <block type="dht_get_value"></block>
@@ -81,12 +86,12 @@
     <block type="ds18b20_convert_temp"></block>
     <block type="ds18b20_get_value"></block>
   </category>
-  <category name="Time" colour="320">
+  <category name="Time" colour="306">
     <block type="timer_event_every"><value name="time"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
     <block type="timer_event_after"><value name="time"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
     <block type="time_sleep"><value name="time"><shadow type="math_number"><field name="NUM">0</field></shadow></value></block>
   </category>
-  <category name="Touch" colour="340">
+  <category name="Touch" colour="324">
     <block type="touch_setup"></block>
     <block type="touch_get_value"></block>
   </category>

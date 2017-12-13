@@ -32,10 +32,6 @@
         [
           "analog input",
           "ANALOG_INPUT"
-        ],
-        [
-          "analog output (PWM)",
-          "PWM"
         ]
       ]
     }
