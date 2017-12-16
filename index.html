@@ -714,11 +714,11 @@ web_editor({
   <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
   <category name="Functions" colour="#9A5CA6" custom="PROCEDURE"></category>
   <sep></sep>
-  <category name="Input"></category>
+  <category name="Input">
   <category name="Button" colour="#5ba5a5">
     <block type="button_setup">
       <field name="NAME" id="r%,WG8jzwamQIO4cr5?t" variabletype="">button</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="button_is_pressed">
       <field name="BUTTON" id="r%,WG8jzwamQIO4cr5?t" variabletype="">button</field>
@@ -727,14 +727,14 @@ web_editor({
   <category name="Light" colour="#5ba5a5">
     <block type="light_setup_photocell">
       <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">A1</field>
     </block>
     <block type="light_get_light_photocell">
       <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
     </block>
     <block type="light_setup_bh1750">
       <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="light_get_light_bh1750">
       <field name="NAME" id="u1he{CkAvhNA*;vic7d_" variabletype="">light</field>
@@ -744,7 +744,7 @@ web_editor({
     <block type="dht_setup">
       <field name="NAME" id="5Iom8N|b+f`Cy8.L-wt9" variabletype="">dht</field>
       <field name="DHT">dht11</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="dht_measure">
       <field name="NAME" id="5Iom8N|b+f`Cy8.L-wt9" variabletype="">dht</field>
@@ -755,7 +755,7 @@ web_editor({
     </block>
     <block type="ds18b20_setup">
       <field name="NAME" id="PXgJ)oI~xM_=wow67e|%" variabletype="">ds18b20</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="ds18b20_convert_temp">
       <field name="NAME" id="PXgJ)oI~xM_=wow67e|%" variabletype="">ds18b20</field>
@@ -767,7 +767,7 @@ web_editor({
   <category name="Soil Moisture" colour="#5ba5a5">
     <block type="moisture_setup">
       <field name="NAME" id="P.0QUg$;KXt!P7q6m7gT" variabletype="">moisture</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">A1</field>
     </block>
     <block type="moisture_get_value">
       <field name="NAME" id="P.0QUg$;KXt!P7q6m7gT" variabletype="">moisture</field>
@@ -776,7 +776,7 @@ web_editor({
   <category name="Motion Sensor" colour="#5ba5a5">
     <block type="motion_setup">
       <field name="NAME" id=":d_sS5e]NAYC~R%-C|O5" variabletype="">pir</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="motion_get_value">
       <field name="NAME" id=":d_sS5e]NAYC~R%-C|O5" variabletype="">pir</field>
@@ -788,17 +788,18 @@ web_editor({
   <category name="Touch Sensor" colour="#5ba5a5">
     <block type="touch_setup">
       <field name="NAME" id="g+eeND~n2thi!L:+uJf;" variabletype="">touch</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="touch_get_value">
       <field name="NAME" id="g+eeND~n2thi!L:+uJf;" variabletype="">touch</field>
     </block>
   </category>
-  <category name="Control"></category>
+</category>
+  <category name="Control">
   <category name="LED" colour="#93a55b">
     <block type="led_setup">
       <field name="NAME" id="PJ)VL+3H*)T*]BU]Pu)O" variabletype="">led</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="led_set">
       <field name="NAME" id="PJ)VL+3H*)T*]BU]Pu)O" variabletype="">led</field>
@@ -812,7 +813,7 @@ web_editor({
   <category name="Buzzer" colour="#a55b5b">
     <block type="buzzer_setup">
       <field name="NAME" id="dwni@;/Z*I,wYYoI%cFP" variabletype="">buzzer</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="buzzer_set">
       <field name="NAME" id="dwni@;/Z*I,wYYoI%cFP" variabletype="">buzzer</field>
@@ -826,7 +827,7 @@ web_editor({
   <category name="Relay" colour="#a55b5b">
     <block type="relay_setup">
       <field name="NAME" id="Qpstyu#@,^q:*e}UHlD`" variabletype="">relay</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="relay_set">
       <field name="NAME" id="Qpstyu#@,^q:*e}UHlD`" variabletype="">relay</field>
@@ -840,7 +841,7 @@ web_editor({
   <category name="Mosfet" colour="#a55b5b">
     <block type="mosfet_setup">
       <field name="NAME" id="H}f%CKS[!VX,:m}prBVS" variabletype="">mosfet</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="mosfet_set">
       <field name="NAME" id="H}f%CKS[!VX,:m}prBVS" variabletype="">mosfet</field>
@@ -854,7 +855,7 @@ web_editor({
   <category name="Servo" colour="#a55b5b">
     <block type="servo_setup">
       <field name="NAME" id="Zo{}BpRF*~IoV`_m==XU" variabletype="">servo</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
     </block>
     <block type="servo_set_angle_fix">
       <field name="NAME" id="Zo{}BpRF*~IoV`_m==XU" variabletype="">servo</field>
@@ -872,7 +873,7 @@ web_editor({
   <category name="PWM">
     <block type="pwm_setup">
       <field name="NAME" id="PLliM=2Wp]uM^WxOMd}3" variabletype="">pwm</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
       <value name="FREQ">
         <block type="math_number">
           <field name="NUM">1000</field>
@@ -902,11 +903,12 @@ web_editor({
     </block>
   </category>
   <category name="Music" colour="#a55b5b"></category>
-  <category name="Display"></category>
+</category>
+  <category name="Display">
   <category name="NeoPixel" colour="#93a55b">
     <block type="neopixel_setup">
       <field name="NAME" id="k+Gu}o*:,P^;=~vFB)Ef" variabletype="">neopixel</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
       <field name="PIXELS">8</field>
     </block>
     <block type="neopixel_set_color_all">
@@ -983,7 +985,7 @@ web_editor({
   <category name="OLED LCD" colour="#93a55b">
     <block type="oled_setup">
       <field name="NAME" id="|GsExAPZA/IVSD7O$q@1" variabletype="">oled</field>
-      <field name="PORT">p1</field>
+      <field name="PORT">D1</field>
       <field name="WIDTH">128</field>
       <field name="HEIGHT">64</field>
     </block>
@@ -1025,11 +1027,12 @@ web_editor({
     </block>
   </category>
   <category name="LED Bar" colour="#93a55b"></category>
+</category>
   <category name="Communication"></category>
   <category name="Bluetooth" colour="#805ba5"></category>
   <category name="LORA" colour="#805ba5"></category>
   <sep></sep>
-  <category name="Advanced"></category>
+  <category name="Advanced">
   <category name="Pins " colour="#805ba5">
     <block type="pin_setup">
       <field name="NAME" id="o]#y6C|*-RLp3]%,|loB" variabletype="">pin</field>
@@ -1124,6 +1127,7 @@ web_editor({
   <category name="IFTTT " colour="#805ba5"></category>
   <category name="Youtube " colour="#805ba5"></category>
   <category name="Database " colour="#805ba5"></category>
+</category>
 </xml>
 
 <xml id="workspaceBlocks" style="display:none">
