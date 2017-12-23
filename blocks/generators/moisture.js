@@ -12,7 +12,8 @@ Blockly.Python['moisture_setup'] = function(block) {
   var dropdown_port = block.getFieldValue('PORT');
   // TODO: Assemble Python into code variable.
   Blockly.Python.definitions_['import_machine'] = 'import machine';
-  var code = variable_name + ' = machine.ADC(' + Blockly.Python.ports[dropdown_port].Pin1 + ')\n';
+  var code = variable_name + ' = machine.ADC(machine.Pin(' + Blockly.Python.ports[dropdown_port].Pin1 + ')); ' 
+    + variable_name + '.atten(machine.ADC.ATTN_11DB);\n';
   return code;
 };
 

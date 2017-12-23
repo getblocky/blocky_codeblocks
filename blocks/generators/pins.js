@@ -21,7 +21,8 @@ Blockly.Python['pin_setup'] = function(block) {
   } else if (dropdown_mode == 'DIGITAL_OUTPUT') {
     code = variable_name + ' = machine.Pin(' + number_pin + ', machine.Pin.OUT)\n';
   } else if (dropdown_mode == 'ANALOG_INPUT') {
-    code = variable_name + ' = machine.ADC(' + number_pin + ')\n';
+    code = variable_name + ' = machine.ADC(machine.Pin(' + number_pin + ')); ' 
+    + variable_name + '.atten(machine.ADC.ATTN_11DB);\n';
   }
 
   return code;
