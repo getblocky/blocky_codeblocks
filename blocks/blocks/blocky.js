@@ -319,14 +319,14 @@ Blockly.Blocks['relay_set'] = {
 
 Blockly.Blocks['servo_set_angle_var'] = {
   init: function() {
-    this.jsonInit({"message0": "Set %1 angle (0-180\u00c2\u00b0) to %2", "args0": [{"type": "field_variable", "name": "NAME", "variable": "servo"}, {"type": "input_value", "name": "NAME"}], "previousStatement": null, "nextStatement": null, "colour": 270, "tooltip": "", "helpUrl": ""});
+    this.jsonInit({"message0": "Set %1 angle (0-180) to %2", "args0": [{"type": "field_variable", "name": "NAME", "variable": "servo"}, {"type": "input_value", "name": "ANGLE_NAME"}], "previousStatement": null, "nextStatement": null, "colour": 270, "tooltip": "", "helpUrl": ""});
   }
 };
 
 
 Blockly.Blocks['servo_set_angle_fix'] = {
   init: function() {
-    this.jsonInit({"message0": "Set %1 angle (0-180\u00c2\u00b0) to %2", "args0": [{"type": "field_variable", "name": "NAME", "variable": "servo"}, {"type": "field_angle", "name": "ANGLE", "angle": 90}], "previousStatement": null, "nextStatement": null, "colour": 270, "tooltip": "", "helpUrl": ""});
+    this.jsonInit({"message0": "Set %1 angle (0-180) to %2", "args0": [{"type": "field_variable", "name": "NAME", "variable": "servo"}, {"type": "field_angle", "name": "ANGLE", "angle": 90}], "previousStatement": null, "nextStatement": null, "colour": 270, "tooltip": "", "helpUrl": ""});
   }
 };
 

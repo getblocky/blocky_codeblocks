@@ -1,6 +1,6 @@
 [{
   "type": "servo_set_angle_var",
-  "message0": "Set %1 angle (0-180°) to %2",
+  "message0": "Set %1 angle (0-180) to %2",
   "args0": [
     {
       "type": "field_variable",
@@ -9,7 +9,7 @@
     },
     {
       "type": "input_value",
-      "name": "NAME"
+      "name": "ANGLE_NAME"
     }
   ],
   "previousStatement": null,
@@ -20,7 +20,7 @@
 },
 {
   "type": "servo_set_angle_fix",
-  "message0": "Set %1 angle (0-180°) to %2",
+  "message0": "Set %1 angle (0-180) to %2",
   "args0": [
     {
       "type": "field_variable",
