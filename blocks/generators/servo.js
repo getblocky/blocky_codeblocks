@@ -12,7 +12,7 @@ Blockly.Python['servo_set_angle_var'] = function(block) {
   var value_angle_name = Blockly.Python.valueToCode(block, 'ANGLE_NAME', Blockly.Python.ORDER_ATOMIC);
   // TODO: Assemble Python into code variable.
   Blockly.Python.definitions_['import_machine'] = 'import machine';
-  var code = variable_name + '.duty(40 + ' + value_angle_name + '*75/180)\n';
+  var code = variable_name + '.duty(int(40 + ' + value_angle_name + '*75/180))\n';
   // TODO: Change ORDER_NONE to the correct strength.
   return code;
 };
