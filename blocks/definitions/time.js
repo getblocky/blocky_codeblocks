@@ -114,4 +114,50 @@
   "colour": 20,
   "tooltip": "",
   "helpUrl": ""
+},
+{
+  "type": "time_schedule",
+  "message0": "When current time (timezone %1 ) is %2 : %3 : %4 then  %5 %6",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "TZ",
+      "value": 7,
+      "min": -14,
+      "max": 13
+    },
+    {
+      "type": "field_number",
+      "name": "HOUR",
+      "value": 0,
+      "min": 0,
+      "max": 23
+    },
+    {
+      "type": "field_number",
+      "name": "MIN",
+      "value": 0,
+      "min": 0,
+      "max": 59
+    },
+    {
+      "type": "field_number",
+      "name": "SEC",
+      "value": 0,
+      "min": 0,
+      "max": 59
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "HANDLER"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
 }]

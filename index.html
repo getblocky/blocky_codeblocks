@@ -1,63 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!--
-                                                                             .:://++++++//:-.
-                                                                           .++/::++++++++++++/`
-                                                                           :++   /+++++++++++/:
-                                                                           :++/:/++++++++++////
-  __  __ _                _____       _   _                                .---------+++//////:
- |  \/  (_)              |  __ \     | | | |                        -:///////////////++///////: ddddhs:
- | \  / |_  ___ _ __ ___ | |__) |   _| |_| |__   ___  _ __        -++++++++++++++++++/////////: ddddddds`
- | |\/| | |/ __| '__/ _ \|  ___/ | | | __| '_ \ / _ \| '_ \      .+++++++++++++++++///////////: ddddddddo
- | |  | | | (__| | | (_) | |   | |_| | |_| | | | (_) | | | |     /+++++++++++++++/////////////`/ddddddddd
- |_|  |_|_|\___|_|  \___/|_|    \__, |\__|_| |_|\___/|_| |_|     ++++++++++++/::::::::::::--..+dddddddddd
-                                 __/ |                           ++++++++++:`-+syyyyyyyysssyhdddddddddddd
-                                |___/                            /++++++++-.hmmdddddddddddddddddddddddddh
-                                                                 -+++++++/`omddddddddddddddddddddddddddd+
-                                                                  :++++///`sddddddddddddddddddddddddddd+
-                                                                   .://///`sdddddddddhyyyyyyyyyyyyyys/`
-                                                                           sdddddddddo++++++++/
-                                                                           sdddddddddddddhshddy
-                                                                           oddddddddddddd`  hdy
-                                                                           .yddddddddddddyoydd/
-                                                                             ./oyhhdddddhys+:`
-WELL DONE!
-
-You've found the source! :-)
-
-If you want to see how the editor works you should check out the python-main.js file - it has all sorts of
-helpful comments for you so you'll be able to work it all out.
-
-If you're wondering what the long string of random looking characters is at the end of this file, well, it's
-a copy of the MicroPython runtime that we copy onto the micro:bit. When you click download, the code you've
-written in the editor is similarly encoded and then inserted at the end where you see a line of ::::::::::::
-characters.
-
-If you want to know more about Python visit:
-
-http://python.org/
-
-If you want to know more about MicroPython (the version of Python we're using here), then visit:
-
-http://micropython.org/
-
-Finally, remember the Zen of MicroPython:
-
-Code,
-Hack it,
-Less is more,
-Keep it simple,
-Small is beautiful,
-
-Be brave! Break things! Learn and have fun!
-Express yourself with MicroPython.
-
-:-)
-
-Happy hacking,
-
-Nicholas and Damien.
-    -->
     <head>
         <meta charset="utf-8">
         <title>Python editor</title>
@@ -257,6 +199,9 @@ Nicholas and Damien.
         <script src="blocks/generators/message.js"></script>
         <script src="blocks/generators/microbit.js"></script>
         <script src="blocks/generators/moisture.js"></script>
+        <script src="blocks/generators/sound.js"></script>
+        <script src="blocks/generators/rotary.js"></script>
+        <script src="blocks/generators/ultrasonic.js"></script>
         <script src="blocks/generators/mosfet.js"></script>
         <script src="blocks/generators/motion.js"></script>
         <script src="blocks/generators/music.js"></script>
@@ -771,6 +716,33 @@ web_editor({
       </block>
       <block type="moisture_get_value">
         <field name="NAME" id="P.0QUg$;KXt!P7q6m7gT" variabletype="">moisture</field>
+      </block>
+    </category>
+    <category name="Sound Sensor" colour="#5ba5a5">
+      <block type="sound_sensor_setup">
+        <field name="NAME" id="P.1QUg$;KXt!P7q6m7gT" variabletype="">sound</field>
+        <field name="PORT">A1</field>
+      </block>
+      <block type="sound_get_value">
+        <field name="NAME" id="P.1QUg$;KXt!P7q6m7gT" variabletype="">sound</field>
+      </block>
+    </category>
+    <category name="Rotary Angle" colour="#5ba5a5">
+      <block type="rotary_angle_setup">
+        <field name="NAME" id="P.2QUg$;KXt!P7q6m7gT" variabletype="">rotary</field>
+        <field name="PORT">A1</field>
+      </block>
+      <block type="rotary_angle_get_value">
+        <field name="NAME" id="P.2QUg$;KXt!P7q6m7gT" variabletype="">rotary</field>
+      </block>
+    </category>
+    <category name="Ultrasonic Sensor" colour="#5ba5a5">
+      <block type="ultrasonic_setup">
+        <field name="NAME" id="P.3QUg$;KXt!P7q6m7gT" variabletype="">ultrasonic</field>
+        <field name="PORT">D1</field>
+      </block>
+      <block type="ultrasonic_measure">
+        <field name="NAME" id="P.3QUg$;KXt!P7q6m7gT" variabletype="">ultrasonic</field>
       </block>
     </category>
     <category name="Motion Sensor" colour="#5ba5a5">

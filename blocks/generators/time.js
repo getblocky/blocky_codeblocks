@@ -55,3 +55,23 @@ Blockly.Python['time_sleep'] = function(block) {
     code = 'time.sleep_us(' + value_time + ')\n';
   return code;
 };
+
+Blockly.Python['time_schedule'] = function(block) {
+  var number_tz = parseInt(block.getFieldValue('TZ'));
+  var number_hour = parseInt(block.getFieldValue('HOUR'));
+  var number_min = parseInt(block.getFieldValue('MIN'));
+  var number_sec = parseInt(block.getFieldValue('SEC'));
+  var statements_handler = Blockly.Python.statementToCode(block, 'HANDLER');
+  // TODO: Assemble Python into code variable.
+  Blockly.Python.definitions_['import_ntptime'] = 'import ntptime';
+  Blockly.Python.definitions_['import_time'] = 'import time';
+  var callbackFunctionName = Blockly.Python.provideFunction_(
+    'timer_schedule_' + Math.floor(Math.random() * 20),
+    ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '():',
+      statements_handler
+    ]);
+  if (dropdown_type == 'sec')
+    value_time = value_time*1000;
+  var code = 'Timer(-1).init(period=' + value_time + ', mode=Timer.ONE_SHOT, callback=' + callbackFunctionName + ')\n';
+  return code;
+};

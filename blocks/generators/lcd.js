@@ -17,8 +17,8 @@ Blockly.Python['oled_setup'] = function(block) {
   Blockly.Python.definitions_['import_machine'] = 'import machine';
   Blockly.Python.definitions_['import_ssd1306'] = 'import ssd1306';
   var code = variable_name + ' = ssd1306.SSD1306_I2C(width=' + number_width + ', height=' + number_height + ', i2c=machine.I2C(scl=machine.Pin(' 
-  + Blockly.Python.ports[dropdown_port].Pin1 + '), sda=machine.Pin(' 
-  + Blockly.Python.ports[dropdown_port].Pin2 + '), freq=400000), external_vcc=False)\n' 
+  + Blockly.Python.ports[dropdown_port].Pin2 + '), sda=machine.Pin(' 
+  + Blockly.Python.ports[dropdown_port].Pin1 + '), freq=400000), external_vcc=False)\n' 
   + variable_name + '.init_display()\n';
 
   return code;
@@ -55,7 +55,6 @@ Blockly.Python['oled_set_text'] = function(block) {
   // TODO: Assemble Python into code variable.
   Blockly.Python.definitions_['import_machine'] = 'import machine';
   Blockly.Python.definitions_['import_ssd1306'] = 'import ssd1306';
-  var code = variable_name + '.text(' + value_pos_x + ', ' + value_pos_y + ', ' 
-    + value_text + ')\n' + variable_name + '.show()\n';
+  var code = variable_name + '.text(str(' + value_text + '), ' + value_pos_x + ', ' + value_pos_y + ')\n' + variable_name + '.show()\n';
   return code;
 };
