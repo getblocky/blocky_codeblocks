@@ -25,6 +25,8 @@ Blockly.Python.init = function(workspace) {
     Blockly.Python.variableDB_.reset();
   }
 
+  Blockly.Python.variableDB_.setVariableMap(workspace.getVariableMap());
+
   Blockly.Python.ports = {
     'A1': {
       'Pin1': 34,
