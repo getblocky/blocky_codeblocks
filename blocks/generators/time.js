@@ -20,7 +20,7 @@ Blockly.Python['timer_event_every'] = function(block) {
     ]);
   if (dropdown_type == 'sec')
     value_time = value_time*1000;
-  var code = 'Timer(-1).init(period=' + value_time + ', mode=Timer.PERIODIC, callback=' + callbackFunctionName + ')\n';
+  var code = 'machine.Timer(-1).init(period=' + value_time + ', mode=machine.Timer.PERIODIC, callback=' + callbackFunctionName + ')\n';
   return code;
 };
 
@@ -37,7 +37,7 @@ Blockly.Python['timer_event_after'] = function(block) {
     ]);
   if (dropdown_type == 'sec')
     value_time = value_time*1000;
-  var code = 'Timer(-1).init(period=' + value_time + ', mode=Timer.ONE_SHOT, callback=' + callbackFunctionName + ')\n';
+  var code = 'machine.Timer(-1).init(period=' + value_time + ', mode=machine.Timer.ONE_SHOT, callback=' + callbackFunctionName + ')\n';
   return code;
 };
 
